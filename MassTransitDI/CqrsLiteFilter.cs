@@ -1,4 +1,5 @@
-﻿using CQRSlite.Events;
+﻿using CQRSlite.Domain;
+using CQRSlite.Events;
 using GreenPipes;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,7 @@ namespace MassTransitDI
 
                     var publisher = services.GetRequiredService<IEventPublisher>() as MassTransitEventPublisher;
 
+                    //  Inject ConsumeContext into IEventPublisher implementation here
                     publisher.SetContext(context);
 
                     await next.Send(context).ConfigureAwait(false);
@@ -42,8 +44,7 @@ namespace MassTransitDI
 
         public void Probe(ProbeContext context)
         {
-            var scope = context.CreateFilterScope("performance");
-            //scope.Add("type", "in-memory");
+            var scope = context.CreateFilterScope("cqrslite");
         }
     }
 

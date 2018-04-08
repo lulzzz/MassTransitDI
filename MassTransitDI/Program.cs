@@ -1,10 +1,6 @@
 ﻿using CQRSlite.Domain;
 using CQRSlite.Events;
-using GreenPipes;
-using GreenPipes.Specifications;
 using MassTransit;
-using MassTransit.ExtensionsDependencyInjectionIntegration;
-using MassTransit.Pipeline.Filters;
 using MassTransit.RabbitMqTransport;
 using MassTransitDI.Domain.CommandHandlers;
 using MassTransitDI.Domain.Commands;
@@ -36,7 +32,7 @@ namespace MassTransitDI
             services.AddSingleton<IEventStore, InMemoryEventStore>();
             services.AddScoped<IEventPublisher, MassTransitEventPublisher>();
             services.AddScoped<ISession, Session>();
-            services.AddSingleton<IRepository, Repository>();
+            services.AddScoped<IRepository, Repository>();
 
             services.AddScoped<CreateAggregateCommandHandler>();
 
